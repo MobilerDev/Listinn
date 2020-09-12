@@ -156,8 +156,11 @@
 			children = (
 				44E826AD250448B1001F5848 /* AppDelegate.swift */,
 				44E826AF250448B1001F5848 /* SceneDelegate.swift */,
-				44E826B1250448B1001F5848 /* ToDoListViewController.swift */,
-				44E826B3250448B1001F5848 /* Main.storyboard */,
+				444AC18625053146009C3A90 /* Data Models */,
+				444AC1872505314E009C3A90 /* Views */,
+				444AC18825053168009C3A90 /* Controllers */,
+				444AC196250536CA009C3A90 /* Supporting Files */,
+				444AC18925053187009C3A90 /* Fonts */,
 				44E826B6250448B6001F5848 /* Assets.xcassets */,
 				44E826B8250448B6001F5848 /* LaunchScreen.storyboard */,
 				44E826BB250448B6001F5848 /* Info.plist */,
@@ -319,6 +322,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				444AC1952505368B009C3A90 /* Item.swift in Sources */,
 				44E826B2250448B1001F5848 /* ToDoListViewController.swift in Sources */,
 				44E826AE250448B1001F5848 /* AppDelegate.swift in Sources */,
 				44E826B0250448B1001F5848 /* SceneDelegate.swift in Sources */,
