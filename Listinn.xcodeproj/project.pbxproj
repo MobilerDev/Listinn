@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4423BA02250D2E8400A1A7AF /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4423BA00250D2E8400A1A7AF /* DataModel.xcdatamodeld */; };
 		444AC18F250531A1009C3A90 /* SanFranciscoDisplay-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 444AC18A250531A1009C3A90 /* SanFranciscoDisplay-Bold.otf */; };
 		444AC190250531A1009C3A90 /* SanFranciscoDisplay-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 444AC18B250531A1009C3A90 /* SanFranciscoDisplay-Light.otf */; };
 		444AC191250531A1009C3A90 /* SanFranciscoDisplay-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 444AC18C250531A1009C3A90 /* SanFranciscoDisplay-Regular.otf */; };
 		444AC192250531A1009C3A90 /* SanFranciscoDisplay-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 444AC18D250531A1009C3A90 /* SanFranciscoDisplay-Medium.otf */; };
 		444AC193250531A1009C3A90 /* SanFranciscoDisplay-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 444AC18E250531A1009C3A90 /* SanFranciscoDisplay-Semibold.otf */; };
-		444AC1952505368B009C3A90 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444AC1942505368B009C3A90 /* Item.swift */; };
 		44E826AE250448B1001F5848 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E826AD250448B1001F5848 /* AppDelegate.swift */; };
 		44E826B0250448B1001F5848 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E826AF250448B1001F5848 /* SceneDelegate.swift */; };
 		44E826B2250448B1001F5848 /* ToDoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E826B1250448B1001F5848 /* ToDoListViewController.swift */; };
@@ -41,12 +41,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4423BA01250D2E8400A1A7AF /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		444AC18A250531A1009C3A90 /* SanFranciscoDisplay-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SanFranciscoDisplay-Bold.otf"; sourceTree = "<group>"; };
 		444AC18B250531A1009C3A90 /* SanFranciscoDisplay-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SanFranciscoDisplay-Light.otf"; sourceTree = "<group>"; };
 		444AC18C250531A1009C3A90 /* SanFranciscoDisplay-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SanFranciscoDisplay-Regular.otf"; sourceTree = "<group>"; };
 		444AC18D250531A1009C3A90 /* SanFranciscoDisplay-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SanFranciscoDisplay-Medium.otf"; sourceTree = "<group>"; };
 		444AC18E250531A1009C3A90 /* SanFranciscoDisplay-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SanFranciscoDisplay-Semibold.otf"; sourceTree = "<group>"; };
-		444AC1942505368B009C3A90 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		44E826AA250448B0001F5848 /* Listinn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Listinn.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		44E826AD250448B1001F5848 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		44E826AF250448B1001F5848 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -91,7 +91,7 @@
 		444AC18625053146009C3A90 /* Data Models */ = {
 			isa = PBXGroup;
 			children = (
-				444AC1942505368B009C3A90 /* Item.swift */,
+				4423BA00250D2E8400A1A7AF /* DataModel.xcdatamodeld */,
 			);
 			path = "Data Models";
 			sourceTree = "<group>";
@@ -322,7 +322,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				444AC1952505368B009C3A90 /* Item.swift in Sources */,
+				4423BA02250D2E8400A1A7AF /* DataModel.xcdatamodeld in Sources */,
 				44E826B2250448B1001F5848 /* ToDoListViewController.swift in Sources */,
 				44E826AE250448B1001F5848 /* AppDelegate.swift in Sources */,
 				44E826B0250448B1001F5848 /* SceneDelegate.swift in Sources */,
@@ -654,6 +654,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		4423BA00250D2E8400A1A7AF /* DataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				4423BA01250D2E8400A1A7AF /* DataModel.xcdatamodel */,
+			);
+			currentVersion = 4423BA01250D2E8400A1A7AF /* DataModel.xcdatamodel */;
+			path = DataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 44E826A2250448B0001F5848 /* Project object */;
 }
