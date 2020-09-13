@@ -53,7 +53,7 @@ class ToDoListViewController: UITableViewController {
         // Check of the items whether checked.
         itemArray[indexPath.row].done = !itemArray[indexPath.row].done
         
-        // Save the items.
+        // Save the change of an item.
         saveAnItem()
         
         // Reload the table view after the check action.
