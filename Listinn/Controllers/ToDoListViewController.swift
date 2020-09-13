@@ -23,8 +23,8 @@ class ToDoListViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Load the items.
-        loadItems()
+        // Load the item(s).
+        loadTheItems()
     }
     
     // MARK: - Data source methods of the table view.
@@ -110,14 +110,14 @@ class ToDoListViewController: UITableViewController {
         self.tableView.reloadData()
     }
     
-    func loadItems() {
-        if let data = try? Data(contentsOf: dataFilePath!) {
-            let decoder = PropertyListDecoder()
-            do {
-                itemArray = try decoder.decode([Item].self, from: data)
-            } catch {
-                print("An error occurred while fetching the data: \(error)")
-            }
+    // Load the item(s).
+    func loadTheItems() {
+        let request: NSFetchRequest<Item> = Item.fetchRequest()
+        
+        do {
+            itemArray = try context.fetch(request)
+        } catch {
+            print("An error occurred while fetching the data: \(error)")
         }
     }
 }
