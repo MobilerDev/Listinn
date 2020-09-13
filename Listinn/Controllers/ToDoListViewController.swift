@@ -7,8 +7,11 @@
 //
 
 import UIKit
+import CoreData
 
 class ToDoListViewController: UITableViewController {
+    
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     // Save the items to the specific path file.
     let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
@@ -51,7 +54,7 @@ class ToDoListViewController: UITableViewController {
         itemArray[indexPath.row].done = !itemArray[indexPath.row].done
         
         // Save the items.
-        saveItems()
+        saveAnItem()
         
         // Reload the table view after the check action.
         tableView.reloadData()
@@ -69,17 +72,18 @@ class ToDoListViewController: UITableViewController {
         let alert = UIAlertController(title: "Add new Listinn Item", message: "", preferredStyle: .alert)
         
         let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
-            let newItem = Item()
+            let newItem = Item(context: self.context)
             newItem.title = textField.text!
+            newItem.done = false
             
             // Add the new item to the to do list array.
             self.itemArray.append(newItem)
             
+            // Save an item.
+            self.saveAnItem()
+            
             // Refresh the table view.
             self.tableView.reloadData()
-            
-            // Save the items.
-            self.saveItems()
         }
         
         alert.addTextField { alertTextField in
@@ -94,16 +98,16 @@ class ToDoListViewController: UITableViewController {
     
     // MARK: - Model Manipulation Methods
     
-    // Save the items.
-    func saveItems() {
+    // Save an item.
+    func saveAnItem() {
         // Save the item to the array.
-        let encoder = PropertyListEncoder()
         do {
-            let data = try encoder.encode(itemArray)
-            try data.write(to: dataFilePath!)
+            try context.save()
         } catch {
-            print("An error occurred while encoding the data: \(error)")
+            print("An error occurred while saving the data: \(error)")
         }
+        
+        self.tableView.reloadData()
     }
     
     func loadItems() {
