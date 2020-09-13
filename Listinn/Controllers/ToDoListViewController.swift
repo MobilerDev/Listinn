@@ -50,6 +50,10 @@ class ToDoListViewController: UITableViewController {
     // MARK: - Delegate methods of the table view.
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // Delete an item.
+//        context.delete(itemArray[indexPath.row])
+//        itemArray.remove(at: indexPath.row)
+        
         // Check of the items whether checked.
         itemArray[indexPath.row].done = !itemArray[indexPath.row].done
         
