@@ -11,20 +11,23 @@ import CoreData
 
 class ToDoListViewController: UITableViewController {
     
+    var itemArray = [Item]()
+    
+    var selectedCategory: Category? {
+        didSet {
+            loadTheItems()
+        }
+    }
+    
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     // Save the items to the specific path file.
     let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
     
-    var itemArray = [Item]()
-    
     let defaults = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Load the item(s).
-        loadTheItems()
     }
     
     // MARK: - Data source methods of the table view.
@@ -34,8 +37,8 @@ class ToDoListViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        //        let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoItemCell", for: indexPath)
-        let cell = UITableViewCell(style: .default, reuseIdentifier: "ToDoItemCell")
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoItemCell", for: indexPath)
+        //        let cell = UITableViewCell(style: .default, reuseIdentifier: "ToDoItemCell")
         
         let item = itemArray[indexPath.row]
         
@@ -51,8 +54,8 @@ class ToDoListViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Delete an item.
-//        context.delete(itemArray[indexPath.row])
-//        itemArray.remove(at: indexPath.row)
+        //        context.delete(itemArray[indexPath.row])
+        //        itemArray.remove(at: indexPath.row)
         
         // Check of the items whether checked.
         itemArray[indexPath.row].done = !itemArray[indexPath.row].done
@@ -79,6 +82,7 @@ class ToDoListViewController: UITableViewController {
             let newItem = Item(context: self.context)
             newItem.title = textField.text!
             newItem.done = false
+            newItem.parentCategory = self.selectedCategory
             
             // Add the new item to the to do list array.
             self.itemArray.append(newItem)
@@ -115,13 +119,48 @@ class ToDoListViewController: UITableViewController {
     }
     
     // Load the item(s).
-    func loadTheItems() {
-        let request: NSFetchRequest<Item> = Item.fetchRequest()
+    func loadTheItems(with request: NSFetchRequest<Item> = Item.fetchRequest(), predicate: NSPredicate? = nil) {
+        let categoryPredicate = NSPredicate(format: "parentCategory.name MATCHES %@", selectedCategory!.name!)
+        
+        if let additionalPredicate = predicate {
+            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, additionalPredicate])
+        } else {
+            request.predicate = categoryPredicate
+        }
         
         do {
             itemArray = try context.fetch(request)
         } catch {
             print("An error occurred while fetching the data: \(error)")
+        }
+    }
+}
+
+// MARK: - The search bar extension of the ToDoListViewController.
+
+extension ToDoListViewController: UISearchBarDelegate {
+    
+    // Search for content in the array based on the text typed in the search bar.
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        // Set a filter for the text typed in the search bar.
+        let request: NSFetchRequest<Item> = Item.fetchRequest()
+        let predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
+        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
+        
+        // Apply the filter.
+        loadTheItems(with: request, predicate: predicate)
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchBar.text?.count == 0 {
+            // Get the whole items, as not filtered.
+            loadTheItems()
+            
+            DispatchQueue.main.async {
+                searchBar.resignFirstResponder()
+            }
+        } else {
+            
         }
     }
 }
