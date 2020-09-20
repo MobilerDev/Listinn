@@ -87,6 +87,7 @@ class ToDoListViewController: UITableViewController {
                     try self.realm.write {
                         let newItem = Item()
                         newItem.title = textField.text!
+                        newItem.dateCreated = Date()
                         
                         // Add the new item to the to do list array.
                         currentCategory.items.append(newItem)
@@ -122,29 +123,24 @@ class ToDoListViewController: UITableViewController {
 
 // MARK: - The search bar extension of the ToDoListViewController.
 
-//extension ToDoListViewController: UISearchBarDelegate {
-//
-//    // Search for content in the array based on the text typed in the search bar.
-//    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-//        // Set a filter for the text typed in the search bar.
-//        let request: NSFetchRequest<Item> = Item.fetchRequest()
-//        let predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
-//        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
-//
-//        // Apply the filter.
-//        loadTheItems(with: request, predicate: predicate)
-//    }
-//
-//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-//        if searchBar.text?.count == 0 {
-//            // Get the whole items, as not filtered.
-//            loadTheItems()
-//
-//            DispatchQueue.main.async {
-//                searchBar.resignFirstResponder()
-//            }
-//        } else {
-//
-//        }
-//    }
-//}
+extension ToDoListViewController: UISearchBarDelegate {
+
+    // Search for content in the array based on the text typed in the search bar.
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        // Set a filter for the text typed in the search bar.
+        todoItems = todoItems?.filter("title CONTAINS[cd] %@", searchBar.text!).sorted(byKeyPath: "dateCreated", ascending: false)
+        
+        tableView.reloadData()
+    }
+
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchBar.text?.count == 0 {
+            // Get the whole items, as not filtered.
+            loadTheItems()
+
+            DispatchQueue.main.async {
+                searchBar.resignFirstResponder()
+            }
+        }
+    }
+}
