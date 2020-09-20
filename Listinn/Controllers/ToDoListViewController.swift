@@ -42,7 +42,7 @@ class ToDoListViewController: UITableViewController {
         
         if let item = todoItems?[indexPath.row] {
             cell.textLabel?.text = item.title
-            cell.textLabel?.font = UIFont(name: "SanFranciscoDisplay-Light", size: 17)
+            cell.textLabel?.font = UIFont(name: "SanFranciscoDisplay-Medium", size: 17)
             
             cell.accessoryType = item.done ? .checkmark : .none
         } else {

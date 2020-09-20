@@ -32,6 +32,7 @@ class CategoryViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath)
         
         cell.textLabel?.text = categories[indexPath.row].name
+        cell.textLabel?.font = UIFont(name: "SanFranciscoDisplay-Medium", size: 17)
         
         return cell
     }
@@ -39,7 +40,7 @@ class CategoryViewController: UITableViewController {
     
     // MARK: - TableView Delegate Methods
     
-    override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: "goToItems", sender: self)
     }
     
