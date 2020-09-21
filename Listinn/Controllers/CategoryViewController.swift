@@ -8,17 +8,21 @@
 
 import UIKit
 import RealmSwift
+import SwipeCellKit
 
-class CategoryViewController: UITableViewController {
+class CategoryViewController: SwipeTableViewController {
     
     let realm = try! Realm()
     
     var categories: Results<Category>!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         loadCategories()
+        
+        // Set the rows of the table view as 80.
+        tableView.rowHeight = 80
     }
     
     
@@ -29,10 +33,11 @@ class CategoryViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath)
         
-        cell.textLabel?.text = categories[indexPath.row].name
-        cell.textLabel?.font = UIFont(name: "SanFranciscoDisplay-Medium", size: 17)
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
+        
+        cell.textLabel?.text = categories?[indexPath.row].name ?? "No Categories Added Yet"
+        cell.textLabel?.font = UIFont(name: "SanFranciscoDisplay-Medium", size: 20)
         
         return cell
     }
@@ -73,9 +78,22 @@ class CategoryViewController: UITableViewController {
         tableView.reloadData()
     }
     
+    // MARK: - Delete A Category
+    
+    override func updateModel(at indexPath: IndexPath) {
+        if let categoryForDeletion = self.categories?[indexPath.row] {
+            do {
+                try self.realm.write {
+                    self.realm.delete(categoryForDeletion)
+                }
+            } catch {
+                print("An error occurred while deleting the category: \(error)")
+            }
+        }
+    }
     
     // MARK: - Add New Categories
-
+    
     @IBAction func addButtonHandler(_ sender: UIBarButtonItem) {
         var textField = UITextField()
         

@@ -9,7 +9,7 @@
 import UIKit
 import RealmSwift
 
-class ToDoListViewController: UITableViewController {
+class ToDoListViewController: SwipeTableViewController {
     
     var todoItems: Results<Item>?
     
@@ -28,6 +28,9 @@ class ToDoListViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Set the rows of the table view as 80.
+        tableView.rowHeight = 80
     }
     
     // MARK: - Data source methods of the table view.
@@ -37,8 +40,8 @@ class ToDoListViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoItemCell", for: indexPath)
-        //        let cell = UITableViewCell(style: .default, reuseIdentifier: "ToDoItemCell")
+        
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
         
         if let item = todoItems?[indexPath.row] {
             cell.textLabel?.text = item.title
@@ -58,7 +61,6 @@ class ToDoListViewController: UITableViewController {
         if let item = todoItems?[indexPath.row] {
             do {
                 try realm.write {
-//                    realm.delete(item)
                     item.done = !item.done
                 }
             } catch {
@@ -119,6 +121,20 @@ class ToDoListViewController: UITableViewController {
         
         tableView.reloadData()
     }
+    
+    // MARK: - Delete An Item
+       
+       override func updateModel(at indexPath: IndexPath) {
+           if let itemForDeletion = self.todoItems?[indexPath.row] {
+               do {
+                   try self.realm.write {
+                       self.realm.delete(itemForDeletion)
+                   }
+               } catch {
+                   print("An error occurred while deleting the item: \(error)")
+               }
+           }
+       }
 }
 
 // MARK: - The search bar extension of the ToDoListViewController.
